@@ -1,3 +1,3 @@
 # phpcrud
 
-Project and task tracking appliction.
+Project and task time tracker application-Treehouse project.
