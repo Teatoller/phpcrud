@@ -13,18 +13,20 @@ include 'inc/header.php';
             <h1 class="actions-header">Project List</h1>
             <div class="actions-item">
                 <a class="actions-link" href="project.php">
-                <span class="actions-icon">
-                  <svg viewbox="0 0 64 64"><use xlink:href="#project_icon"></use></svg>
-                </span>
-                Add Project
+                    <span class="actions-icon">
+                        <svg viewbox="0 0 64 64">
+                            <use xlink:href="#project_icon"></use>
+                        </svg>
+                    </span>
+                    Add Project
                 </a>
             </div>
 
             <div class="form-container">
                 <ul class="items">
-                  <?php foreach(get_project_list() as $item){
-                    //  var_dump($item);
-                    echo "<li>". $item['title'] ."</li>";
+                    <?php foreach (get_project_list() as $item) {
+                        echo "<li><a href='project.php?id=" . $item['project_id'] . "'>" . 
+                        $item['title'] . "</a></li>";
                     } ?>
 
                 </ul>

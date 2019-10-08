@@ -75,6 +75,33 @@ function get_project($project_id)
   return $results->fetch();
 }
 
+function add_project($title, $category, $project_id = null)
+{
+  include("inc/connection.php");
+
+  if ($project_id) {
+    $sql = 'UPDATE projects SET title = ?, category= ? WHERE project_id = ?';
+  } else {
+    $sql = "INSERT INTO projects(title, category) VALUES(?,?)";
+  }
+
+
+
+  try {
+    $results = $db->prepare($sql);
+    $results->bindValue(1, $title, PDO::PARAM_STR);
+    $results->bindValue(2, $category, PDO::PARAM_STR);
+    if ($project_id) {
+      $results->bindValue(3, $project_id, PDO::PARAM_INT);
+    }
+    $results->execute();
+  } catch (Exception $e) {
+    echo "Error! " . $e->getMessage() . "<br />";
+    return false;
+  }
+  return true;
+}
+
 function add_task($project_id, $title, $date, $time)
 {
   include("inc/connection.php");
