@@ -8,7 +8,14 @@ $title = '';
 $date = '';
 $time = '';
 
+// Return an array of all the task item
+if (isset($_GET['id'])) {
+    $task_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+    list($task_id, $title, $date, $time, $project_id) = get_task($task_id);
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $task_id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
     $project_id = trim(filter_input(INPUT_POST, 'project_id', FILTER_SANITIZE_NUMBER_INT));
     $title = trim(filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING));
     $date = trim(filter_input(INPUT_POST, 'date', FILTER_SANITIZE_STRING));
@@ -28,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ) {
         $error_message = "Invalid Date";
     } else {
-        if (add_task($project_id, $title, $date, $time)) {
+        if (add_task($project_id, $title, $date, $time, $task_id)) {
             header('Location: task_list.php');
             exit;
         } else {
@@ -43,7 +50,13 @@ include 'inc/header.php';
 <div class="section page">
     <div class="col-container page-container">
         <div class="col col-70-md col-60-lg col-center">
-            <h1 class="actions-header">Add Task</h1>
+            <h1 class="actions-header"><?php
+            if (!empty($task_id)) {
+                echo 'Update';
+            } else {
+                echo 'Add';
+            }
+             ?>ask</h1>
             <?php
             if (isset($error_message)) {
                 echo "<p class='message'>$error_message</p>";
@@ -81,6 +94,11 @@ include 'inc/header.php';
                         <td><input type="text" id="time" name="time" value="<?php echo htmlspecialchars($time) ?>" /> minutes</td>
                     </tr>
                 </table>
+                <?php
+                if (!empty($task_id)) {
+                    echo '<input type="hidden" name="id" value = " ' . $task_id . ' " />';
+                }
+                ?>
                 <input class="button button--primary button--topic-php" type="submit" value="Submit" />
             </form>
         </div>
