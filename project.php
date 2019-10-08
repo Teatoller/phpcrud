@@ -63,16 +63,16 @@ include 'inc/header.php';
                                                                 echo ' selected';
                                                             }
                                                             ?>>Billable</option>
-                                <option value="Charity"<?php
+                                <option value="Charity" <?php
                                                         if ($category == 'Charity') {
                                                             echo ' selected';
                                                         }
                                                         ?>>Charity</option>
-                                <option value="Personal"<?php
-                                                        if ($category == 'Personal') {
-                                                            echo ' selected';
-                                                        }
-                                                        ?>>Personal</option>
+                                <option value="Personal" <?php
+                                                            if ($category == 'Personal') {
+                                                                echo ' selected';
+                                                            }
+                                                            ?>>Personal</option>
                             </select></td>
                     </tr>
                 </table>

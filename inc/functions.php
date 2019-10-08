@@ -119,11 +119,28 @@ function get_task($task_id)
   return $results->fetch();
 }
 
+function delete_task($task_id)
+{
+  include("inc/connection.php");
+
+  $sql = "DELETE FROM tasks WHERE task_id = ?";
+
+  try {
+    $results = $db->prepare($sql);
+    $results->bindValue(1, $task_id, PDO::PARAM_INT);
+    $results->execute();
+  } catch (Exception $e) {
+    echo "Error! " . $e->getMessage() . "<br />";
+    return false;
+  }
+  return true;
+}
+
 function add_task($project_id, $title, $date, $time, $task_id = null)
 {
   include("inc/connection.php");
 
-  if (task_id) {
+  if ($task_id) {
     $sql = 'UPDATE tasks SET project_id = ?, title = ?, date = ?, time = ?'
       . ' WHERE task_id = ?';
   } else {
